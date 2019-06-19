@@ -1,0 +1,88 @@
+<?php if ($this->session->flashdata('ubahSuccess')) : ?>
+    <div class="alert alert-success mr-5 alert-dismissible fade show col-lg-auto" role="alert">
+        <?= $this->session->flashdata('ubahSuccess') ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif ?>
+<?php if ($this->session->flashdata('deleteSuccess')) : ?>
+    <div class="alert alert-success mr-5 alert-dismissible fade show col-lg-auto" role="alert">
+        <?= $this->session->flashdata('deleteSuccess') ?>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+<?php endif ?>
+<?php if ($this->session->flashdata('addSuccess')) : ?>
+<div class="alert alert-success alert-dismissible fade show col-lg-auto" role="alert">
+    <?= $this->session->flashdata('addSuccess') ?>
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+        <span aria-hidden="true">&times;</span>
+    </button>
+</div>
+<?php endif ?>
+
+
+<div class="row">
+
+    <div class="col col-lg-11 mx-auto">
+        <div class="card">
+            <div class="card-header form-inline d-flex justify-content-between">
+                <h5>Inventories</h5>
+                <span class="form-group ml-2">
+                    <?php if ($this->session->userdata('level') > 2) : ?>
+                        <a class="btn btn-yellow btn-sm mr-2" href="<?= base_url(); ?>Barang/cetak" target="_blank"><i class="far fa-file-pdf"></i> Cetak PDF</a>
+                        <a class="btn btn-primary btn-sm" href="<?= base_url(); ?>Barang/tambah"><i class="fa fa-plus"></i> Tambah data</a>
+                    <?php endif ?>
+                </span>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table data">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Nama</th>
+                                <th scope="col">Kode</th>
+                                <th scope="col">kondisi</th>
+                                <th scope="col">Jumlah</th>
+                                <th scope="col">Kategori</th>
+                                <th scope="col">Ruang</th>
+                                <th></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php $nomor = 1;
+                            foreach ($barang as $barang) : ?>
+                                <tr>
+                                    <th scope="row"><?= $nomor ?></th>
+                                    <td><?= $barang['nama'] ?></td>
+                                    <td><strong><?= $barang['kode'] ?></strong></td>
+                                    <td><?= $barang['kondisi'] ?></td>
+                                    <td><?= $barang['jumlah'] ?></td>
+                                    <td>
+                                        <?php if ($barang['id_kategori'] == 1): ?>
+                                            <span class="badge badge-danger"><?= $barang['nama_kategori'] ?></span>
+                                        <?php else : ?>
+                                            <?= $barang['nama_kategori'] ?>
+                                        <?php endif ?>
+                                    </td>
+                                    <td><?= $barang['nama_ruang'] ?></td>
+                                    <td>
+                                        <?php if ($this->session->userdata('level') > 2) : ?>
+                                            <a class="btn btn-info btn-sm" href="<?= base_url(); ?>Barang/ubah/<?= $barang['id'] ?>"><i class="fa fa-pen"></i> Ubah</a>
+                                        <?php endif ?>
+                                    </td>
+
+                                </tr>
+                                <?php $nomor++;
+                            endforeach ?>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
